@@ -1,3 +1,4 @@
+use std::fmt::{self};
 // Tuples can be used as function arguments and as return values
 fn reverse(pair: (i32, bool)) -> (bool, i32) {
     let (int_params, bool_params) = pair;
@@ -5,8 +6,20 @@ fn reverse(pair: (i32, bool)) -> (bool, i32) {
     (bool_params, int_params)
 }
 
-#[derive(Debug)]
+fn transpose(matrix: Matrix) -> Matrix {
+    let Matrix(row1col1, row1col2, row2col1, row2col2) = matrix;
+
+    Matrix(row1col1, row2col1, row1col2, row2col2)
+}
+
 struct Matrix(f32, f32, f32, f32);
+
+impl fmt::Display for Matrix {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        writeln!(f, "( {} {} )", self.0, self.1)?;
+        writeln!(f, "( {} {} )", self.2, self.3)
+    }
+}
 
 fn main() {
     // A tuple with a bunch of different types.
@@ -47,5 +60,6 @@ fn main() {
     println!("{:?}, {:?}, {:?}, {:?}", a, b, c, d);
 
     let matrix = Matrix(1.1, 1.2, 2.1, 2.2);
-    println!("{:?}", matrix);
+    println!("{}", matrix);
+    println!("{}", transpose(matrix));
 }
